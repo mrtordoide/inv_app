@@ -9,8 +9,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 // }
 
 class ListBuilder extends StatefulWidget {
-  Future<List> datalist;
-  ListBuilder({Key? key, required this.datalist}) : super(key: key);
+  final Future<List> datalist;
+  const ListBuilder({Key? key, required this.datalist}) : super(key: key);
 
   @override
   State<ListBuilder> createState() => _ListBuilder();
@@ -53,13 +53,18 @@ class _ListBuilder extends State<ListBuilder> {
                         ),
                       ],
                     ),
-                    child: ListTile(
-                      leading: const FlutterLogo(size: 40.0),
-                      title: Text(snapshot.data[index]["title"]),
-                      subtitle: Text(snapshot.data[index]["subtitle"]),
-                      isThreeLine: true,
-                      dense: true,
-                    ));
+                    child: InkWell(
+                        onTap: () {},
+                        splashFactory: InkRipple.splashFactory,
+                        child: ListTile(
+                          leading: const CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  "https://source.unsplash.com/random")),
+                          title: Text(snapshot.data[index]["title"]),
+                          subtitle: Text(snapshot.data[index]["description"]),
+                          isThreeLine: true,
+                          dense: true,
+                        )));
               });
         });
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inventory_app/screens/add_category_screen.dart';
 import 'package:inventory_app/screens/add_product_screen.dart';
 import 'package:inventory_app/screens/add_supplier_screen.dart';
+import 'package:inventory_app/widgets/bottom_sheet.dart';
 import 'package:inventory_app/widgets/list_builder.dart';
 import '../apis/get_category.dart';
 import '../apis/get_product.dart';
@@ -18,9 +19,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  // static List<ListBuilderData> myList = <ListBuilderData>[];
   List<Widget> myBodyWidget = <Widget>[];
   late Future<List> future;
+
+  static const List<Widget> myBottomSheet = <Widget>[
+    AddProductScreen(),
+    AddCategoryScreen(),
+    AddSupplierScreen(),
+    // const CustomBottomSheet(),
+  ];
+
   var appBarTitle = "";
   void onAddButtonTapped;
 
@@ -70,14 +78,29 @@ class _HomeScreenState extends State<HomeScreen> {
         child: FloatingActionButton(
           onPressed: () {
             if (_selectedIndex == 0) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddProductScreen()));
+              showModalBottomSheet(
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  context: context,
+                  builder: (BuildContext context) {
+                    return myBottomSheet.elementAt(_selectedIndex);
+                  });
             } else if (_selectedIndex == 1) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddCategoryScreen()));
+              showModalBottomSheet(
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  context: context,
+                  builder: (BuildContext context) {
+                    return myBottomSheet.elementAt(_selectedIndex);
+                  });
             } else {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddSupplierScreen()));
+              showModalBottomSheet(
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  context: context,
+                  builder: (BuildContext context) {
+                    return myBottomSheet.elementAt(_selectedIndex);
+                  });
             }
           },
           backgroundColor: Colors.blue,
