@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:inventory_app/screens/add_category_screen.dart';
 import 'package:inventory_app/screens/add_product_screen.dart';
 import 'package:inventory_app/screens/add_supplier_screen.dart';
-import 'package:inventory_app/widgets/bottom_sheet.dart';
 import 'package:inventory_app/widgets/list_builder.dart';
 import '../apis/get_category.dart';
 import '../apis/get_product.dart';
 import '../apis/get_supplier.dart';
+import '../widgets/search_delegate.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -20,13 +20,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   List<Widget> myBodyWidget = <Widget>[];
+  List<ProductSearch> delegateSearch = <ProductSearch>[];
   late Future<List> future;
 
   static const List<Widget> myBottomSheet = <Widget>[
     AddProductScreen(),
     AddCategoryScreen(),
     AddSupplierScreen(),
-    // const CustomBottomSheet(),
   ];
 
   var appBarTitle = "";
@@ -62,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedIndex = index;
       myBodyWidget = <Widget>[ListBuilder(datalist: data)];
+      delegateSearch = <ProductSearch>[ProductSearch(future: data)];
     });
   }
 
@@ -69,9 +70,19 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(appBarTitle),
-        ),
+        title: Text(appBarTitle),
+        titleSpacing: 24.0,
+        actions: [
+          IconButton(
+              onPressed: () {
+                showSearch(
+                    context: context, delegate: delegateSearch.elementAt(0));
+              },
+              icon: const Icon(Icons.search)),
+          const SizedBox(
+            width: 10,
+          ),
+        ],
       ),
       body: myBodyWidget.elementAt(0),
       floatingActionButton: InkWell(

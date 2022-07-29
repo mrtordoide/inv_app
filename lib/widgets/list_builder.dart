@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-// class ListBuilderData {
-//   String title;
-//   String subtitle;
-
-//   ListBuilderData({required this.title, required this.subtitle});
-// }
-
 class ListBuilder extends StatefulWidget {
   final Future<List> datalist;
   const ListBuilder({Key? key, required this.datalist}) : super(key: key);
@@ -26,6 +19,8 @@ class _ListBuilder extends State<ListBuilder> {
             return const Center(child: Text("Loading . . ."));
           }
           return ListView.separated(
+              shrinkWrap: true,
+              physics: const ScrollPhysics(),
               padding: const EdgeInsets.all(8),
               itemCount: snapshot.data.length,
               separatorBuilder: (_, __) => const Divider(height: 1),
@@ -61,7 +56,7 @@ class _ListBuilder extends State<ListBuilder> {
                               backgroundImage: NetworkImage(
                                   "https://source.unsplash.com/random")),
                           title: Text(snapshot.data[index]["title"]),
-                          subtitle: Text(snapshot.data[index]["description"]),
+                          subtitle: Text(snapshot.data[index]["subtitle"]),
                           isThreeLine: true,
                           dense: true,
                         )));
