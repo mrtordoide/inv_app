@@ -22,30 +22,12 @@ class ProductSearch extends SearchDelegate<String> {
       ];
 
   @override
-  Widget? buildLeading(BuildContext context) => IconButton(
+  Widget buildLeading(BuildContext context) => IconButton(
       onPressed: () => close(context, ""), icon: const Icon(Icons.arrow_back));
 
   @override
   Widget buildResults(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.location_city,
-            size: 120,
-          ),
-          const SizedBox(
-            height: 48,
-          ),
-          Text(
-            query,
-            style: const TextStyle(
-                color: Colors.black, fontSize: 64, fontWeight: FontWeight.bold),
-          )
-        ],
-      ),
-    );
+    return Container();
   }
 
   @override
